@@ -1,0 +1,69 @@
+{
+  "name": "iyzipay-node-ts",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Modern, Type-Safe and Edge-Compatible Iyzipay Client for Node.js & Next.js",
+  "author": "Mehmet Yiğit Yalım <email@mehmetyigityalim.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/yigityalim/iyzipay-node-ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yigityalim/iyzipay-node-ts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yigityalim/iyzipay-node-ts/issues"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts --clean --minify",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "iyzico",
+    "iyzipay",
+    "payment",
+    "typescript",
+    "nextjs",
+    "edge",
+    "serverless",
+    "fintech"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tsup": "^8.0.1",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.0",
+    "prettier": "^3.2.0",
+    "eslint": "^8.56.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

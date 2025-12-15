@@ -1,0 +1,10 @@
+src/
+test/
+examples/
+coverage/
+.github/
+.git/
+vitest.config.ts
+tsconfig.json
+.prettierrc
+.eslintrc

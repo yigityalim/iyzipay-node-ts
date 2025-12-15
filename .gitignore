@@ -1,0 +1,34 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Production
+dist
+build
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Testing & Logs
+coverage
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lcov.info
+
+# IDE & OS
+.DS_Store
+.idea
+.vscode
+*.swp
+*.swo
+
+# TypeScript
+*.tsbuildinfo
+
+# Semantic Release & CI
+.releaserc
