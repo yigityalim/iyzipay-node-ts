@@ -1,6 +1,6 @@
 {
   "name": "iyzipay-node-ts",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "description": "Modern, Type-Safe and Edge-Compatible Iyzipay Client for Node.js & Next.js",
   "author": "Mehmet Yiğit Yalım <email@mehmetyigityalim.com>",
