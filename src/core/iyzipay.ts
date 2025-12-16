@@ -1,6 +1,8 @@
 import { HttpClient } from './http-client.js';
 import { PaymentResource } from '../resources/payment.js';
 import type { IyzipayConfig } from '../types/index.js';
+import { RefundResource } from '../resources/refund.js';
+import { CancelResource } from '../resources/cancel.js';
 
 /**
  * The main entry point for the Iyzipay SDK.
@@ -13,6 +15,16 @@ export class Iyzipay {
    * Access to Payment-related operations (Create, Retrieve, etc.)
    */
   public payment: PaymentResource;
+
+  /**
+   * Access to Refund-related operations.
+   */
+  public refund: RefundResource;
+
+  /**
+   * Access to Cancellation (Void) operations.
+   */
+  public cancel: CancelResource;
 
   /**
    * Creates a new Iyzipay client instance.
@@ -32,6 +44,8 @@ export class Iyzipay {
     
     this.httpClient = new HttpClient(config);
     this.payment = new PaymentResource(this.httpClient);
+    this.refund = new RefundResource(this.httpClient);
+    this.cancel = new CancelResource(this.httpClient);
   }
 
   /**
