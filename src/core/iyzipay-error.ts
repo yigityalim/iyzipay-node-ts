@@ -1,5 +1,9 @@
 import type { IyzipayResponse } from '../types/index.js';
 
+/**
+ * Represents an error returned by the Iyzico API.
+ * Extends the native Error class to provide detailed Iyzico-specific fields.
+ */
 export class IyzipayError extends Error {
   public status: string;
   public errorCode?: string;

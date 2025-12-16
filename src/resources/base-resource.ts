@@ -1,13 +1,15 @@
 import { HttpClient } from '../core/http-client.js';
 
 /**
- * Base resource class for all resources.
+ * Abstract base class for all Iyzico API resources.
+ * Provides shared access to the HTTP client for making requests.
  *
  * @abstract
  * @class
- *
- * @property {HttpClient} client - The HTTP client to use for requests.
  */
 export abstract class BaseResource {
+  /**
+   * @param client - The HTTP client instance used for API communication.
+   */
   constructor(protected client: HttpClient) {}
 }

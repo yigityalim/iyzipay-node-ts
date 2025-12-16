@@ -2,8 +2,10 @@
  * Universal Crypto Layer
  *
  * This module provides a unified interface for cryptographic operations (SHA1, HMAC-SHA256)
- * that works across Node.js (Legacy & Modern), Edge Runtimes (Cloudflare, Vercel),
- * and Browsers/React Native.
+ * that works seamlessly across:
+ * - Node.js (Legacy & Modern)
+ * - Edge Runtimes (Cloudflare Workers, Vercel Edge)
+ * - Browsers & React Native
  */
 
 import type * as NodeCrypto from 'node:crypto';
@@ -21,11 +23,11 @@ const getWebCrypto = (): Crypto | undefined => {
 
 /**
  * Dynamically imports the Node.js legacy crypto module.
- * This is a fallback for Node.js 18 and older or environments lacking global crypto.
+ * This acts as a fallback for Node.js 18 and older, or environments lacking global crypto.
  */
 const getNodeCrypto = async (): Promise<typeof NodeCrypto> => {
   try {
-    // @ts-ignore: Dynamic import may not be recognized by all bundlers but works in Node
+    // @ts-ignore: Dynamic import is necessary for cross-platform compatibility
     return await import('node:crypto');
   } catch {
     throw new Error(
@@ -37,7 +39,7 @@ const getNodeCrypto = async (): Promise<typeof NodeCrypto> => {
 
 /**
  * Computes a SHA-1 hash of the given string.
- * Required for Iyzico V1 Authentication headers.
+ * This is primarily required for Iyzico V1 Authentication headers.
  *
  * @param input - The string to hash.
  * @returns The SHA-1 hash encoded as a Base64 string.
@@ -60,7 +62,7 @@ export async function calculateSHA1(input: string): Promise<string> {
 
 /**
  * Computes an HMAC-SHA256 signature.
- * Required for Iyzico V2 Authentication headers.
+ * This is the standard for Iyzico V2 Authentication headers.
  *
  * @param key - The secret key used for signing.
  * @param data - The data payload to sign.

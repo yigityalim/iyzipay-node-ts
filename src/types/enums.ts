@@ -27,7 +27,7 @@ export enum PaymentGroup {
 }
 
 /**
- * Payment channels.
+ * Payment channels defining where the transaction originates.
  */
 export enum PaymentChannel {
   WEB = 'WEB',
@@ -41,7 +41,7 @@ export enum PaymentChannel {
 }
 
 /**
- * Basket item types.
+ * Types of items in the basket.
  */
 export enum ItemType {
   PHYSICAL = 'PHYSICAL',
@@ -50,7 +50,7 @@ export enum ItemType {
 
 /**
  * Common Iyzico Error Codes.
- * @see https://docs.iyzico.com/hata-kodlari
+ * @see https://docs.iyzico.com/ek-bilgiler/hata-kodlari
  */
 export enum IyzipayErrorCode {
   SYSTEM_ERROR = '1',

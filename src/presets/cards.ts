@@ -1,12 +1,14 @@
 import type { PaymentCard } from '../types/payment.js';
 
 /**
- * Pre-defined test cards for Sandbox environment.
- * Includes success cards, foreign cards, and error-producing cards.
+ * Pre-defined test cards for the Sandbox environment.
+ * Includes success cards, foreign cards, and cards triggering specific errors.
+ *
+ * @see {@link https://docs.iyzico.com/ek-bilgiler/test-kartlari | Official Iyzico Test Cards}
  */
 export const TestCards = {
   /**
-   * Cards that return a successful response.
+   * Cards that are expected to return a successful response in the sandbox.
    */
   Success: {
     /** Akbank | MasterCard | Debit */
@@ -18,7 +20,7 @@ export const TestCards = {
     /** Garanti | MasterCard | Debit */
     GarantiDebit: createCard('5170410000000004'),
     /** Garanti | Amex | Credit */
-    GarantiAmex: createCard('374427000000003', '1234'), // Amex 4 digit CVC
+    GarantiAmex: createCard('374427000000003', '1234'), // Amex requires 4-digit CVC
     /** IsBankasi | Visa | Credit */
     IsBankasiCredit: createCard('4543590000000006'),
     /** YapiKredi | MasterCard | Credit */
@@ -26,7 +28,7 @@ export const TestCards = {
   },
 
   /**
-   * Cards defined as Foreign (Non-Turkish).
+   * Cards defined as Foreign (Non-Turkish) for testing cross-border scenarios.
    */
   Foreign: {
     Credit: createCard('5400010000000004'),
@@ -35,7 +37,7 @@ export const TestCards = {
 
   /**
    * Cards that simulate specific error scenarios.
-   * Useful for testing error handling logic.
+   * Useful for testing error handling logic without relying on random failures.
    */
   Errors: {
     /** Error: 10051 - Not sufficient funds */
@@ -55,6 +57,11 @@ export const TestCards = {
 
 /**
  * Helper to create a card object with default valid dates.
+ * Defaults to expiration in 2030 and CVC '123'.
+ *
+ * @param number - The card number.
+ * @param cvc - The CVC code (default: '123').
+ * @returns A partial `PaymentCard` object ready for use.
  */
 function createCard(number: string, cvc = '123'): PaymentCard {
   return {
