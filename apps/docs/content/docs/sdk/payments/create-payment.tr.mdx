@@ -1,0 +1,51 @@
+---
+title: Ödeme Oluşturma
+description: Bir ödeme nasıl başlatılır.
+---
+
+
+
+Ödeme yetkilendirme akışını başlatmak için `iyzipay.payment.create` metodunu kullanın.
+
+## Örnek
+
+Bu örnek, kısalık için `Inputs` ve `TestCards` yardımcılarını kullanır.
+
+```typescript
+import { Currency, PaymentGroup, Inputs, TestCards } from 'iyzipay-node-ts';
+
+const result = await iyzipay.payment.create({
+  price: '150.00',
+  paidPrice: '150.00',
+  currency: Currency.TRY,
+  paymentGroup: PaymentGroup.PRODUCT,
+  
+  // Test Kartı Kullanımı
+  paymentCard: TestCards.Success.GarantiDebit,
+  
+  // Alıcı Oluşturma
+  buyer: Inputs.buyer({
+    id: 'USER-1',
+    name: 'Ahmet',
+    surname: 'Yilmaz',
+    email: 'test@example.com',
+    identityNumber: '11111111111'
+  }),
+  
+  // Adres Oluşturma
+  shippingAddress: Inputs.address('Istanbul, Kadikoy', 'Ahmet Yilmaz'),
+  billingAddress: Inputs.address('Istanbul, Kadikoy', 'Ahmet Yilmaz'),
+  
+  // Sepet Oluşturma
+  basketItems: [
+    Inputs.basketItem('Oyuncu Faresi', '100.00'),
+    Inputs.basketItem('Mousepad', '50.00'),
+  ]
+});
+
+if (result.status === 'success') {
+  console.log('Ödeme başarılı!', result.paymentId);
+} else {
+  console.error('Ödeme başarısız:', result.errorMessage);
+}
+```

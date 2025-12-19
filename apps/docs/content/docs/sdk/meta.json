@@ -1,0 +1,14 @@
+{
+	"title": "SDK",
+	"description": "Node.js SDK Documentation",
+	"icon": "Package",
+	"root": true,
+	"pages": [
+		"index",
+		"getting-started",
+		"---Core---",
+		"payments",
+		"utilities",
+		"advanced"
+	]
+}

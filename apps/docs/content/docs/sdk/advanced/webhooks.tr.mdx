@@ -1,0 +1,35 @@
+---
+title: Webhook'lar
+description: Iyzico webhook'larını doğrulama.
+---
+
+
+
+Iyzico, sonuç bildirimleri için webhook (IPN) gönderir. İsteğin Iyzico'dan geldiğinden emin olmak için imzayı **doğrulamanız GEREKİR**.
+
+## Doğrulama
+
+HMAC-SHA256 imzasını hesaplayan `verifyWebhookSignature` yardımcı fonksiyonunu sağlıyoruz.
+
+```typescript
+import { verifyWebhookSignature } from 'iyzipay-node-ts';
+
+// Örnek Next.js Route Handler
+export async function POST(request: Request) {
+  const body = await request.text();
+  const signature = request.headers.get('x-iyz-signature');
+
+  const isValid = await verifyWebhookSignature({
+    secretKey: process.env.IYZIPAY_SECRET_KEY!,
+    body: body,
+    signature: signature
+  });
+
+  if (!isValid) {
+    return new Response('Geçersiz İmza', { status: 400 });
+  }
+
+  // Webhook'u işle...
+  return new Response('TAMAM');
+}
+```

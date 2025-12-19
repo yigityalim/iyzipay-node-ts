@@ -1,0 +1,48 @@
+---
+title: İade & İptal
+description: İade ve iptal yönetimi.
+---
+
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+
+
+<Tabs items={['İade (Refund)', 'İptal (Cancel)']}>
+  <Tab value="İade (Refund)">
+  ### İade (Kısmi veya Tam)
+  
+  Belirli ürünler için para iadesi yapmak (kısmi) veya tüm işlemi iade etmek için kullanılır.
+  `paymentTransactionId` (sepetteki belirli ürünün ID'si) gereklidir.
+
+  ```typescript
+  const result = await iyzipay.refund.create({
+    paymentTransactionId: '123456789',
+    price: '50.00', // İade edilecek tutar
+    currency: 'TRY',
+    ip: '85.34.78.112'
+  });
+
+  if (result.data?.status === 'success') {
+    console.log('İade başarılı');
+  }
+  ```
+  </Tab>
+  <Tab value="İptal (Cancel)">
+  ### İptal (Void)
+  
+  Ödemeyi **tamamen** iptal etmek için kullanılır.
+  Genellikle gün sonu mutabakatından önce (aynı gün içinde) mümkündür.
+  `paymentId` gereklidir.
+
+  ```typescript
+  const result = await iyzipay.cancel.create({
+    paymentId: '123456', // Ana Ödeme ID'si
+    ip: '85.34.78.112'
+  });
+
+  if (result.data?.status === 'success') {
+    console.log('Ödeme iptal edildi');
+  }
+  ```
+  </Tab>
+</Tabs>

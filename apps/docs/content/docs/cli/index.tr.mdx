@@ -1,0 +1,59 @@
+---
+title: Giriş
+description: iyzipay-node-ts için resmi komut satırı aracı.
+---
+
+import { TerminalIcon, CreditCardIcon, ZapIcon, SettingsIcon } from 'lucide-react';
+
+**Iyzipay CLI**, Iyzico ödemeleriyle çalışırken Geliştirici Deneyiminizi (DX) iyileştirmek için tasarlanmıştır. Terminalinizden doğrudan bağlantıları test etmenize, API anahtarlarını yönetmenize ve bileşenler oluşturmanıza olanak tanır.
+
+## Kurulum
+
+CLI'ı global olarak kurmanıza gerek yoktur. Paket yöneticinizin çalıştırma komutunu (örn. `npx` veya `pnpx`) kullanarak doğrudan çalıştırabilirsiniz.
+
+Ancak, projenize de ekleyebilirsiniz:
+
+```package-install
+npm install iyzipay-node-ts
+```
+
+## Hızlı Başlangıç
+
+Kullanılabilir seçenekleri görmek için yardım komutunu çalıştırın:
+
+```bash
+npx iyzi --help
+```
+
+## Özellikler
+
+<Cards>
+  <Card
+    icon={<SettingsIcon />}
+    href="/docs/cli/commands#iyzi-init"
+    title="Proje Kurulumu"
+  >
+    Projenizi başlatın ve API kimlik bilgilerinizi güvenli bir şekilde doğrulayın.
+  </Card>
+  <Card
+    icon={<CreditCardIcon />}
+    href="/docs/cli/commands#iyzi-cards"
+    title="Test Kartları"
+  >
+    Başarılı ve hatalı senaryolar için test kartı numaralarına erişebileceğiniz etkileşimli sihirbaz.
+  </Card>
+  <Card
+    icon={<ZapIcon />}
+    href="/docs/cli/commands#iyzi-pay"
+    title="Anında Ödeme"
+  >
+    Entegrasyonunuzu doğrulamak için saniyeler içinde gerçek bir Sandbox ödemesi yapın.
+  </Card>
+  <Card
+    icon={<TerminalIcon />}
+    href="/docs/cli/commands#iyzi-generate"
+    title="Kod Üretimi"
+  >
+    React/Next.js için üretime hazır, type-safe ödeme formları oluşturun.
+  </Card>
+</Cards>

@@ -1,0 +1,74 @@
+---
+title: Quick Start
+description: Make your first request.
+---
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+
+
+In this guide, we will create a simple payment request using the test environment.
+
+<Steps>
+<Step>
+
+### Initialize Client
+
+Create a client using your Sandbox keys.
+
+```typescript
+import { Iyzipay, Currency, PaymentGroup, Inputs, TestCards } from 'iyzipay-node-ts';
+
+const iyzipay = new Iyzipay({
+  apiKey: process.env.IYZIPAY_API_KEY!,
+  secretKey: process.env.IYZIPAY_SECRET_KEY!,
+  baseUrl: 'https://sandbox-api.iyzipay.com'
+});
+```
+
+</Step>
+<Step>
+
+### Create Payment
+
+Make a request using the `Inputs` builder and `TestCards`.
+
+```typescript
+const result = await iyzipay.payment.create({
+  price: '1.00',
+  paidPrice: '1.20',
+  currency: Currency.TRY,
+  paymentGroup: PaymentGroup.PRODUCT,
+  paymentCard: TestCards.Success.GarantiDebit,
+  buyer: Inputs.buyer({
+    id: '123',
+    name: 'John',
+    surname: 'Doe',
+    email: 'john@example.com',
+    identityNumber: '11111111111'
+  }),
+  shippingAddress: Inputs.address('Istanbul', 'John Doe'),
+  billingAddress: Inputs.address('Istanbul', 'John Doe'),
+  basketItems: [
+    Inputs.basketItem('Test Item', '1.00')
+  ]
+});
+```
+
+</Step>
+<Step>
+
+### Handle Result
+
+Check if the operation was successful.
+
+```typescript
+if (result.data && result.data.status === 'success') {
+  console.log('✅ Payment ID:', result.data.paymentId);
+} else {
+  console.error('❌ Error:', result.error?.errorMessage || result.data?.errorMessage);
+}
+```
+
+</Step>
+</Steps>

@@ -1,0 +1,74 @@
+---
+title: Hızlı Başlangıç
+description: İlk isteğinizi yapın.
+---
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+
+
+Bu rehberde, test ortamını kullanarak basit bir ödeme isteği oluşturacağız.
+
+<Steps>
+<Step>
+
+### İstemciyi (Client) Başlatın
+
+Sandbox anahtarlarınızı kullanarak bir istemci oluşturun.
+
+```typescript
+import { Iyzipay, Currency, PaymentGroup, Inputs, TestCards } from 'iyzipay-node-ts';
+
+const iyzipay = new Iyzipay({
+  apiKey: process.env.IYZIPAY_API_KEY!,
+  secretKey: process.env.IYZIPAY_SECRET_KEY!,
+  baseUrl: 'https://sandbox-api.iyzipay.com'
+});
+```
+
+</Step>
+<Step>
+
+### Ödeme Oluşturun
+
+`Inputs` oluşturucuyu ve `TestCards` yardımcılarını kullanarak istek yapın.
+
+```typescript
+const result = await iyzipay.payment.create({
+  price: '1.00',
+  paidPrice: '1.20',
+  currency: Currency.TRY,
+  paymentGroup: PaymentGroup.PRODUCT,
+  paymentCard: TestCards.Success.GarantiDebit,
+  buyer: Inputs.buyer({
+    id: '123',
+    name: 'Ahmet',
+    surname: 'Yilmaz',
+    email: 'ahmet@example.com',
+    identityNumber: '11111111111'
+  }),
+  shippingAddress: Inputs.address('Istanbul', 'Ahmet Yilmaz'),
+  billingAddress: Inputs.address('Istanbul', 'Ahmet Yilmaz'),
+  basketItems: [
+    Inputs.basketItem('Test Urunu', '1.00')
+  ]
+});
+```
+
+</Step>
+<Step>
+
+### Sonucu İşleyin
+
+İşlemin başarılı olup olmadığını kontrol edin.
+
+```typescript
+if (result.data && result.data.status === 'success') {
+  console.log('✅ Ödeme ID:', result.data.paymentId);
+} else {
+  console.error('❌ Hata:', result.error?.errorMessage || result.data?.errorMessage);
+}
+```
+
+</Step>
+</Steps>

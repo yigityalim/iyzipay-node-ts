@@ -1,0 +1,50 @@
+---
+title: Test Cards
+description: Sandbox test cards.
+---
+
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+
+
+Access predefined cards for sandbox testing directly from the SDK.
+
+## Usage
+
+```typescript
+import { TestCards } from 'iyzipay-node-ts';
+
+// Use directly in your payment requests
+const payment = await iyzipay.payment.create({
+  // ...
+  paymentCard: TestCards.Success.GarantiDebit
+});
+```
+
+## Available Cards
+
+<Tabs items={['Success', 'Errors', 'Foreign']}>
+  <Tab value="Success">
+    | Bank | Type | Key |
+    | --- | --- | --- |
+    | Akbank | Debit | `TestCards.Success.AkbankDebit` |
+    | Akbank | Credit | `TestCards.Success.AkbankCredit` |
+    | Garanti | Debit | `TestCards.Success.GarantiDebit` |
+    | Garanti | Amex | `TestCards.Success.GarantiAmex` |
+    | IsBankasi | Credit | `TestCards.Success.IsBankasiCredit` |
+  </Tab>
+  <Tab value="Errors">
+    | Error | Description | Key |
+    | --- | --- | --- |
+    | **Insufficient Funds** | 10051 | `TestCards.Errors.InsufficientFunds` |
+    | **Stolen Card** | 10043 | `TestCards.Errors.StolenCard` |
+    | **Expired Card** | 10054 | `TestCards.Errors.ExpiredCard` |
+    | **Fraud Suspect** | 10034 | `TestCards.Errors.FraudSuspect` |
+  </Tab>
+  <Tab value="Foreign">
+    | Type | Key |
+    | --- | --- |
+    | Credit | `TestCards.Foreign.Credit` |
+    | Debit | `TestCards.Foreign.Debit` |
+  </Tab>
+</Tabs>

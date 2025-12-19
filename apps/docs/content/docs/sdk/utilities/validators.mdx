@@ -1,0 +1,48 @@
+---
+title: Validators
+description: Zod schemas for TCKN and Cards.
+---
+
+
+
+We export Zod schemas and helper functions to help you validate forms on the server or client.
+
+## Usage
+
+```typescript
+import { IyzipayValidators } from 'iyzipay-node-ts';
+
+// 1. TCKN (Turkish ID) Validation
+try {
+  IyzipayValidators.tcKimlikNo.parse('11111111110');
+  console.log('Valid TCKN');
+} catch (e) {
+  console.error('Invalid TCKN');
+}
+
+// 2. Credit Card (Luhn) Validation
+try {
+  IyzipayValidators.creditCard.parse('4111111111111111');
+} catch (e) {
+  console.error('Invalid Card Number');
+}
+
+// 3. GSM Number Validation
+try {
+  IyzipayValidators.gsmNumber.parse('+905551234567');
+} catch (e) {
+  console.error('Invalid GSM');
+}
+```
+
+## Standalone Functions
+
+If you don't want to use Zod, you can import the validation functions directly:
+
+```typescript
+import { isValidTCKN, isValidLuhn } from 'iyzipay-node-ts';
+
+if (isValidTCKN('11111111110')) {
+  // ...
+}
+```

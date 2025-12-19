@@ -1,0 +1,39 @@
+---
+title: Kurulum
+description: Paketi projenize ekleyin.
+---
+
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+
+
+Paketi tercih ettiğiniz paket yöneticisi ile yükleyin.
+
+<Tabs items={['npm', 'pnpm', 'yarn', 'bun']}>
+  <Tab value="npm">
+  ```bash
+  npm install iyzipay-node-ts zod
+  ```
+  </Tab>
+  <Tab value="pnpm">
+  ```bash
+  pnpm add iyzipay-node-ts zod
+  ```
+  </Tab>
+  <Tab value="yarn">
+  ```bash
+  yarn add iyzipay-node-ts zod
+  ```
+  </Tab>
+  <Tab value="bun">
+  ```bash
+  bun add iyzipay-node-ts zod
+  ```
+  </Tab>
+</Tabs>
+
+## Gereksinimler
+
+- Node.js 18+
+- TypeScript 5.0+ (Önerilen)
+- Zod 3.0+ (Peer Dependency)

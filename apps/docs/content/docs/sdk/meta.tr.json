@@ -1,0 +1,14 @@
+{
+	"title": "SDK",
+	"description": "Node.js SDK Dokümantasyonu",
+	"icon": "Package",
+	"root": true,
+	"pages": [
+		"index",
+		"getting-started",
+		"---Çekirdek---",
+		"payments",
+		"utilities",
+		"advanced"
+	]
+}

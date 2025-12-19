@@ -1,0 +1,47 @@
+---
+title: Input Builder
+description: Helper for generating complex objects.
+---
+
+
+
+The `Inputs` object helps you generate bureaucratic fields (like Zip Codes, Dates, Cities) automatically, so you can focus on the business logic.
+
+```typescript
+import { Inputs, ItemType } from 'iyzipay-node-ts';
+
+// 1. Create a Buyer
+const buyer = Inputs.buyer({
+  id: 'USER-123',
+  name: 'Ahmet',
+  surname: 'Yilmaz',
+  identityNumber: '11111111111',
+  email: 'ahmet@test.com',
+  // Optional:
+  // city: 'Ankara',
+  // ip: '1.1.1.1'
+});
+
+// 2. Create an Address
+const address = Inputs.address(
+  'Ataturk Mah. No:1',  // Full Address
+  'Ahmet Yilmaz'        // Contact Name
+);
+
+// 3. Create a Basket Item
+const item = Inputs.basketItem(
+  'Wireless Mouse',       // Name
+  '120.00',              // Price
+  'Electronics',         // Category
+  ItemType.PHYSICAL      // Type
+);
+
+// 4. Create a Card (Without saving it)
+const card = Inputs.card({
+  cardHolderName: 'John Doe',
+  cardNumber: '...',
+  expireMonth: '12',
+  expireYear: '2030',
+  cvc: '123'
+});
+```

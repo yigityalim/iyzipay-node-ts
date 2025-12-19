@@ -1,0 +1,43 @@
+---
+title: Authentication
+description: Setting up authentication and environment variables.
+---
+
+
+
+You need an API Key and Secret Key from the [Iyzico Dashboard](https://sandbox-merchant.iyzipay.com/).
+
+## Environment Variables
+
+The SDK checks for the following environment variables if you use `Iyzipay.fromEnv()`:
+
+| Variable | Description |
+| --- | --- |
+| `IYZIPAY_API_KEY` | Your API Key |
+| `IYZIPAY_SECRET_KEY` | Your Secret Key |
+| `IYZIPAY_BASE_URL` | Base URL (Default: `https://api.iyzipay.com`) |
+
+For sandbox testing, set `IYZIPAY_BASE_URL` to `https://sandbox-api.iyzipay.com`.
+
+## Initialization
+
+### 1. Using Environment Variables (Recommended)
+
+```typescript
+import { Iyzipay } from 'iyzipay-node-ts';
+
+// Automatically loads from process.env or import.meta.env
+const iyzipay = Iyzipay.fromEnv();
+```
+
+### 2. Manual Configuration
+
+```typescript
+import { createClient } from 'iyzipay-node-ts';
+
+const iyzipay = createClient({
+  apiKey: 'YOUR_API_KEY',
+  secretKey: 'YOUR_SECRET_KEY',
+  baseUrl: 'https://sandbox-api.iyzipay.com'
+});
+```

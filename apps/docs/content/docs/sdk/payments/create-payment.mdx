@@ -1,0 +1,51 @@
+---
+title: Create Payment
+description: How to initialize a payment.
+---
+
+
+
+Use `iyzipay.payment.create` to initialize a payment authorization flow.
+
+## Example
+
+This example uses `Inputs` and `TestCards` helpers for brevity.
+
+```typescript
+import { Currency, PaymentGroup, Inputs, TestCards } from 'iyzipay-node-ts';
+
+const result = await iyzipay.payment.create({
+  price: '150.00',
+  paidPrice: '150.00',
+  currency: Currency.TRY,
+  paymentGroup: PaymentGroup.PRODUCT,
+  
+  // Use a Test Card
+  paymentCard: TestCards.Success.GarantiDebit,
+  
+  // Build Buyer
+  buyer: Inputs.buyer({
+    id: 'USER-1',
+    name: 'John',
+    surname: 'Doe',
+    email: 'test@example.com',
+    identityNumber: '11111111111'
+  }),
+  
+  // Build Address
+  shippingAddress: Inputs.address('Istanbul, Kadikoy', 'John Doe'),
+  billingAddress: Inputs.address('Istanbul, Kadikoy', 'John Doe'),
+  
+  // Build Basket
+  basketItems: [
+    Inputs.basketItem('Gaming Mouse', '100.00'),
+    Inputs.basketItem('Mousepad', '50.00'),
+  ]
+});
+
+if (result.status === 'success') {
+  console.log('Payment successful!', result.paymentId);
+} else {
+  console.error('Payment failed:', result.errorMessage);
+}
+```

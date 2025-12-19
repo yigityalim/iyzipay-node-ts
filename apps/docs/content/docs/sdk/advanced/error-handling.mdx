@@ -1,0 +1,47 @@
+---
+title: Error Handling
+description: Handling API errors gracefully.
+---
+
+
+
+The SDK uses a result pattern `IyzipayResult<T>` to handle success and failure without throwing exceptions for API errors.
+
+## Result Structure
+
+```typescript
+type IyzipayResult<T> = {
+  data: T | null;    // Present on success or partial API error
+  error: any | null; // Present on network error or validation error
+}
+```
+
+## Handling Logic
+
+```typescript
+const result = await iyzipay.payment.create({ ... });
+
+// 1. Check for Validation/Network Errors (SDK Level)
+if (result.error) {
+  console.error('Validation or Network Error:', result.error);
+  return;
+}
+
+// 2. Check for API Errors (Iyzico Level)
+if (result.data?.status === 'failure') {
+  console.error('API Error Code:', result.data.errorCode);
+  console.error('API Error Message:', result.data.errorMessage);
+  return;
+}
+
+// 3. Success
+console.log('Success:', result.data);
+```
+
+### Common Error Codes
+
+| Code | Meaning |
+| --- | --- |
+| `10051` | Insufficient funds |
+| `10043` | Stolen card |
+| `10012` | Invalid transaction |

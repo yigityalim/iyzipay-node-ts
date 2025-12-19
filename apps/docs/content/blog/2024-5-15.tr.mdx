@@ -1,0 +1,156 @@
+---
+title: iyzipay-node-ts ile Tanışın
+description: Node.js geliştiricileri için modern, tip güvenli ve Edge uyumlu Iyzico SDK'sı.
+author: Iyzipay TS Ekibi
+date: 2024-03-20
+---
+
+import { Cpu, ShieldCheck, Zap, Terminal } from 'lucide-react';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
+# iyzipay-node-ts ile Tanışın
+
+Modern JavaScript ekosistemi için sıfırdan tasarlanmış Iyzico istemcisi **iyzipay-node-ts**'i duyurmaktan heyecan duyuyoruz.
+
+Eğer daha önce resmi kütüphanenin TypeScript desteği olmamasıyla, "callback cehennemiyle" veya Cloudflare Workers gibi Edge ortamlarında çalışmamasıyla mücadele ettiyseniz, bu paket tam size göre.
+
+## Neden Yeniden Yazdık?
+
+Resmi `iyzipay` kütüphanesi Node.js'in çok daha eski bir döneminde yazıldı. Bugünün dünyasında ise sağlam tip desteğine, `async/await` yapısına ve Edge uyumluluğuna ihtiyacımız var.
+
+<Cards>
+  <Card icon={<ShieldCheck />} title="Tip Güvenliği">
+    Zod şemaları ile birinci sınıf TypeScript desteği. Hataları kod çalışmadan yakalayın.
+  </Card>
+  <Card icon={<Zap />} title="Edge Uyumlu">
+    Native `fetch` API üzerine kurulu. Cloudflare Workers, Vercel Edge ve Bun üzerinde sorunsuz çalışır.
+  </Card>
+  <Card icon={<Terminal />} title="Geliştirici Deneyimi">
+    Kod üreten ve anında ödeme testi yapmanızı sağlayan güçlü bir CLI aracı ile gelir.
+  </Card>
+</Cards>
+
+## Öne Çıkan Özellikler
+
+### 1. Sıfır Ayar ile Doğrulama (Validation)
+
+Arka planda **Zod** kullanıyoruz. Hangi alanın zorunlu olduğunu veya kredi kartı formatının nasıl olması gerektiğini tahmin etmenize gerek yok. Hatta bu doğrulayıcıları (Validators) Frontend tarafında formlarınızda kullanmanız için dışarı açtık!
+
+```tsx tab="React Hook Form Örneği"
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { IyzipayValidators } from 'iyzipay-node-ts';
+
+const formSchema = z.object({
+  // Hazır TCKN Algoritması & Luhn Kontrolü
+  identityNumber: IyzipayValidators.tcKimlikNo, // [!code highlight]
+  cardNumber: IyzipayValidators.creditCard,     // [!code highlight]
+});
+
+```
+
+### 2. CLI Aracı
+
+Bir SDK'nın size daha az kod yazdırması gerektiğine inanıyoruz. Bu yüzden sizin yerinize kod üreten bir CLI geliştirdik.
+
+<CodeBlockTabs defaultValue="Kod Üret">
+<CodeBlockTabsList>
+<CodeBlockTabsTrigger value="Kod Üret">Kod Üret</CodeBlockTabsTrigger>
+<CodeBlockTabsTrigger value="Test Et">Test Et</CodeBlockTabsTrigger>
+</CodeBlockTabsList>
+
+<CodeBlockTab value="Kod Üret">
+Saniyeler içinde tam özellikli bir ödeme formu (Shadcn UI veya Tailwind) oluşturun.
+
+```bash
+npx iyzi generate
+```
+
+</CodeBlockTab>
+
+<CodeBlockTab value="Test Et">
+Tek satır kod yazmadan Sandbox üzerinde API anahtarlarınızı test edin ve gerçek bir ödeme oluşturun.
+
+```bash
+npx iyzi pay
+```
+
+</CodeBlockTab>
+</CodeBlockTabs>
+
+### 3. Modern Asenkron API
+
+Callback'lere elveda deyin. Her şey Promise tabanlı ve tam tip destekli.
+
+```typescript title="payment.ts"
+import { iyzipay, Currency, PaymentGroup } from 'iyzipay-node-ts';
+
+const client = iyzipay({ ...config });
+
+// Temiz, okunabilir ve tip güvenli
+const { data, error } = await client.payment.create({
+  price: '120.00',
+  currency: Currency.TRY,
+  paymentGroup: PaymentGroup.PRODUCT,
+  // ...diğer parametreler
+});
+
+if (error) {
+  console.error(error.errorMessage); // [!code error]
+  return;
+}
+
+console.log(data.paymentId); // [!code success]
+
+```
+
+## Başlarken
+
+Ödeme altyapınızı yükseltmeye hazır mısınız? 30 saniyeden az sürer.
+
+<Steps>
+<Step>
+### Paketi Kurun
+
+```npm
+npm install iyzipay-node-ts
+```
+
+</Step>
+
+<Step>
+### İstemciyi Başlatın (Initialize)
+
+Client örneğinizi oluşturun. Ortam değişkenlerini (Environment Variables) kullanmanızı öneririz.
+
+```typescript
+import { createClient } from 'iyzipay-node-ts';
+
+export const client = createClient({
+  apiKey: process.env.IYZIPAY_API_KEY,
+  secretKey: process.env.IYZIPAY_SECRET_KEY,
+  baseUrl: 'https://sandbox-api.iyzipay.com'
+});
+```
+
+</Step>
+
+<Step>
+### İlk İsteğinizi Atın
+
+Tam örnek için [Hızlı Başlangıç](/docs/getting-started/quick-start) rehberine göz atın.
+
+</Step>
+</Steps>
+
+## Sırada Ne Var?
+
+Şu anda aktif olarak **3D Secure** entegrasyonu ve CLI için **Webhook Tünelleme** (Webhook Tunneling) özellikleri üzerinde çalışıyoruz.
+
+<Callout type="info" title="Topluluğa Katılın">
+Bu açık kaynaklı bir projedir. Özellik isteğiniz varsa veya bir hata bulursanız, lütfen [GitHub Depomuza](https://github.com/your-repo) göz atın.
+</Callout>
+
+Keyifli Kodlamalar! 🚀

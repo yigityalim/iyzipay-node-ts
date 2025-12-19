@@ -1,0 +1,43 @@
+---
+title: Kimlik Doğrulama
+description: Kimlik doğrulama ve ortam değişkenleri kurulumu.
+---
+
+
+
+[Iyzico Paneli](https://sandbox-merchant.iyzipay.com/)'nden API Anahtarı ve Güvenlik Anahtarı (Secret Key) almanız gerekmektedir.
+
+## Ortam Değişkenleri
+
+SDK, `Iyzipay.fromEnv()` kullandığınızda aşağıdaki ortam değişkenlerini kontrol eder:
+
+| Değişken | Açıklama |
+| --- | --- |
+| `IYZIPAY_API_KEY` | API Anahtarınız |
+| `IYZIPAY_SECRET_KEY` | Güvenlik Anahtarınız |
+| `IYZIPAY_BASE_URL` | Base URL (Varsayılan: `https://api.iyzipay.com`) |
+
+Sandbox testleri için `IYZIPAY_BASE_URL` değerini `https://sandbox-api.iyzipay.com` olarak ayarlayın.
+
+## Başlatma
+
+### 1. Ortam Değişkenlerini Kullanma (Önerilen)
+
+```typescript
+import { Iyzipay } from 'iyzipay-node-ts';
+
+// process.env veya import.meta.env üzerinden otomatik yükler
+const iyzipay = Iyzipay.fromEnv();
+```
+
+### 2. Manuel Konfigürasyon
+
+```typescript
+import { createClient } from 'iyzipay-node-ts';
+
+const iyzipay = createClient({
+  apiKey: 'API_ANAHTARINIZ',
+  secretKey: 'GUVENLIK_ANAHTARINIZ',
+  baseUrl: 'https://sandbox-api.iyzipay.com'
+});
+```

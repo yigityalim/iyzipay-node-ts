@@ -1,0 +1,147 @@
+---
+title: Commands
+description: Detailed reference for all available CLI commands.
+---
+
+
+
+The Iyzipay CLI provides a suite of tools to speed up your development workflow.
+
+## General Usage
+
+All commands use the `iyzi` prefix. You can see the list of available commands by running:
+
+```bash
+npx iyzi --help
+```
+
+---
+
+## `iyzi init`
+
+Initializes the project configuration. This command creates a `.env` file (if it doesn't exist) and helps you populate it with your API keys.
+
+<Steps>
+<Step>
+ ### Run the command
+ 
+ ```bash
+ npx iyzi init
+ ```
+</Step>
+<Step>
+ ### Enter Credentials
+ 
+ It will ask for your **API Key** and **Secret Key**. You can find these in your [Iyzico Sandbox Account](https://sandbox-iyzipay.com).
+</Step>
+<Step>
+ ### Verification
+ 
+ It automatically verifies the credentials by making a test request to the API.
+</Step>
+</Steps>
+
+---
+
+## `iyzi whoami`
+
+Checks the current environment configuration and connectivity.
+
+```bash
+npx iyzi whoami
+```
+
+**Output:**
+- **Environment**: Sandbox or Production.
+- **Masked Credentials**: Shows part of your API key for verification.
+- **Latency**: Pings the Iyzico API to check response time.
+
+<Callout type="info">
+  Use this command if you are experiencing connection timeouts or authentication errors.
+</Callout>
+
+---
+
+## `iyzi pay`
+
+Creates a test payment instantly. It's the fastest way to verify that your whole integration pipeline (keys + network) is working.
+
+```bash
+npx iyzi pay
+```
+
+It uses a hardcoded test card (Garanti Bonus) and a random basket item to perform a `payment.create` operation.
+
+---
+
+## `iyzi cards`
+
+An interactive wizard to find and copy test card numbers. No need to browse documentation pages to find a specific test card.
+
+```bash
+npx iyzi cards
+```
+
+<Tabs items={['Success Scenarios', 'Error Scenarios']}>
+  <Tab value="Success Scenarios">
+    Select from a list of valid cards:
+    - Garanti Debit (MasterCard)
+    - Akbank Credit (MasterCard)
+    - IsBankasi Credit (Visa)
+    - Foreign Credit Cards
+  </Tab>
+  <Tab value="Error Scenarios">
+    Test specific error codes easily:
+    - Insufficient Funds (Error 10051)
+    - Stolen Card (Error 10043)
+    - Expired Card (Error 10054)
+  </Tab>
+</Tabs>
+
+The selected card number is automatically **copied to your clipboard**.
+
+---
+
+## `iyzi check`
+
+Retrieves installment options for a specific price and credit card BIN (first 6 digits).
+
+```bash
+npx iyzi check <price> --bin <binNumber>
+```
+
+**Arguments:**
+
+| Argument | Description |
+| :--- | :--- |
+| `<price>` | The amount to query installments for (e.g. `100`). |
+| `--bin, -b` | The first 6 digits of the credit card. |
+
+**Example:**
+
+```bash
+# Check installments for 1500 TRY on a card starting with 552608
+npx iyzi check 1500 -b 552608
+```
+
+It displays a neat table of available installment plans, total prices, and per-month costs.
+
+---
+
+## `iyzi generate`
+
+Scaffolds UI components for your project. Currently supports generating a **Payment Form**.
+
+```bash
+npx iyzi generate
+```
+
+The CLI will ask you for:
+1. **Component Type**: e.g., Checkout Form.
+2. **Style**:
+    - **Shadcn UI**: Uses generic `components/ui` structure (Zod + React Hook Form).
+    - **Tailwind CSS**: Pure HTML/CSS with Tailwind classes (headless).
+
+<Callout type="warn">
+  This command assumes you have a `components` directory. It will create `components/iyzipay-ui/payment-form.tsx`.
+</Callout>

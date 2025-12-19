@@ -1,0 +1,35 @@
+---
+title: Webhooks
+description: Verifying Iyzico webhooks.
+---
+
+
+
+Iyzico sends webhooks (IPN) for result notifications. You **MUST** verify the signature to ensure the request comes from Iyzico.
+
+## Verification
+
+We provide a helper function `verifyWebhookSignature` that calculates the HMAC-SHA256 signature.
+
+```typescript
+import { verifyWebhookSignature } from 'iyzipay-node-ts';
+
+// Example Next.js Route Handler
+export async function POST(request: Request) {
+  const body = await request.text();
+  const signature = request.headers.get('x-iyz-signature');
+
+  const isValid = await verifyWebhookSignature({
+    secretKey: process.env.IYZIPAY_SECRET_KEY!,
+    body: body,
+    signature: signature
+  });
+
+  if (!isValid) {
+    return new Response('Invalid Signature', { status: 400 });
+  }
+
+  // Process webhook...
+  return new Response('OK');
+}
+```

@@ -1,0 +1,37 @@
+---
+title: Giriş
+description: Node.js için Modern ve Type-Safe Iyzipay İstemcisi
+---
+
+
+
+**iyzipay-node-ts**, Iyzico ödeme API'si için modern, type-safe (tür güvenli) ve edge-uyumlu bir istemcidir (client).
+
+## Özellikler
+
+- **🛡️ Type-Safe**: TypeScript ve Zod ile geliştirildi.
+- **🚀 Edge Uyumlu**: Vercel Edge, Cloudflare Workers ve diğer environmentlarda çalışır.
+- **🏗️ Fonksiyonel & Class Tabanlı**: Hem fonksiyonel `createClient()` hem de class tabanlı `new Iyzipay()` kullanımını destekler.
+- **🛠️ Hazır Araçlar**: Dahili doğrulayıcılar (TCKN, Luhn) ve input oluşturucular.
+
+## Kurulum
+
+```package-install
+npm install iyzipay-node-ts
+```
+
+## Hızlı Başlangıç
+
+```typescript
+import { createClient } from 'iyzipay-node-ts';
+
+const client = createClient({
+  apiKey: process.env.IYZIPAY_API_KEY,
+  secretKey: process.env.IYZIPAY_SECRET_KEY,
+  baseUrl: 'https://sandbox-api.iyzipay.com'
+});
+
+const result = await client.payment.retrieve({
+  paymentId: '123456'
+});
+```

@@ -1,0 +1,7 @@
+{
+	"title": "API Referansı",
+	"description": "Detaylı API dokümantasyonu",
+	"icon": "Library",
+	"root": true,
+	"pages": ["index"]
+}

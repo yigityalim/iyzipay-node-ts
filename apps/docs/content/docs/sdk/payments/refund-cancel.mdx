@@ -1,0 +1,48 @@
+---
+title: Refund & Cancel
+description: Managing returns and cancellations.
+---
+
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+
+
+<Tabs items={['Refund', 'Cancel']}>
+  <Tab value="Refund">
+  ### Refund (Partial or Full)
+  
+  Used when you want to return money for specific items (partial) or the whole transaction.
+  Requires `paymentTransactionId` (the ID of the specific item in the basket).
+
+  ```typescript
+  const result = await iyzipay.refund.create({
+    paymentTransactionId: '123456789',
+    price: '50.00', // Amount to refund
+    currency: 'TRY',
+    ip: '85.34.78.112'
+  });
+
+  if (result.data?.status === 'success') {
+    console.log('Refund successful');
+  }
+  ```
+  </Tab>
+  <Tab value="Cancel">
+  ### Cancel (Void)
+  
+  Used when you want to void the **entire** payment.
+  Usually only possible on the same day (before reconciliation).
+  Requires `paymentId`.
+
+  ```typescript
+  const result = await iyzipay.cancel.create({
+    paymentId: '123456', // Main Payment ID
+    ip: '85.34.78.112'
+  });
+
+  if (result.data?.status === 'success') {
+    console.log('Payment cancelled');
+  }
+  ```
+  </Tab>
+</Tabs>

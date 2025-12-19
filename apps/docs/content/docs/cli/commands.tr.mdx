@@ -1,0 +1,147 @@
+---
+title: Komutlar
+description: Mevcut tüm CLI komutları için detaylı referans.
+---
+
+
+
+Iyzipay CLI, geliştirme sürecinizi hızlandırmak için bir dizi araç sunar.
+
+## Genel Kullanım
+
+Tüm komutlar `iyzi` öneki ile başlar. Kullanılabilir komutları listelemek için:
+
+```bash
+npx iyzi --help
+```
+
+---
+
+## `iyzi init`
+
+Proje yapılandırmasını başlatır. Bu komut (yoksa) bir `.env` dosyası oluşturur ve API anahtarlarınızı girmenize yardımcı olur.
+
+<Steps>
+<Step>
+ ### Komutu Çalıştırın
+ 
+ ```bash
+ npx iyzi init
+ ```
+</Step>
+<Step>
+ ### Kimlik Bilgilerini Girin
+ 
+ **API Key** ve **Secret Key** bilgilerinizi girmenizi isteyecektir. Bu bilgileri [Iyzico Sandbox Hesabınızda](https://sandbox-iyzipay.com) bulabilirsiniz.
+</Step>
+<Step>
+ ### Doğrulama
+ 
+ CLI, API'ye bir test isteği göndererek bilgilerin doğruluğunu otomatik olarak kontrol eder.
+</Step>
+</Steps>
+
+---
+
+## `iyzi whoami`
+
+Mevcut ortam yapılandırmasını ve bağlantı durumunu kontrol eder.
+
+```bash
+npx iyzi whoami
+```
+
+**Çıktı:**
+- **Environment**: Sandbox veya Production.
+- **Masked Credentials**: Doğrulama için API anahtarınızın bir kısmını gösterir.
+- **Latency**: Iyzico API'sine ping atarak yanıt süresini ölçer.
+
+<Callout type="info">
+  Bağlantı zaman aşımı veya yetkilendirme hataları yaşıyorsanız bu komutu kullanın.
+</Callout>
+
+---
+
+## `iyzi pay`
+
+Anında bir test ödemesi oluşturur. Tüm entegrasyon hattının (keys + network) çalıştığını doğrulamanın en hızlı yoludur.
+
+```bash
+npx iyzi pay
+```
+
+`payment.create` işlemini gerçekleştirmek için hazır bir test kartı (Garanti Bonus) ve rastgele bir sepet öğesi kullanır.
+
+---
+
+## `iyzi cards`
+
+Test kart numaralarını bulmak ve kopyalamak için etkileşimli bir sihirbaz. Belirli bir test kartını bulmak için dokümantasyon sayfalarını gezmenize gerek kalmaz.
+
+```bash
+npx iyzi cards
+```
+
+<Tabs items={['Başarılı Senaryolar', 'Hata Senaryoları']}>
+  <Tab value="Başarılı Senaryolar">
+    Geçerli kartlar arasından seçim yapın:
+    - Garanti Debit (MasterCard)
+    - Akbank Credit (MasterCard)
+    - IsBankasi Credit (Visa)
+    - Yabancı Kredi Kartları
+  </Tab>
+  <Tab value="Hata Senaryoları">
+    Belirli hata kodlarını kolayca test edin:
+    - Yetersiz Bakiye (Hata 10051)
+    - Çalıntı Kart (Hata 10043)
+    - Süresi Dolmuş Kart (Hata 10054)
+  </Tab>
+</Tabs>
+
+Seçilen kart numarası otomatik olarak **panoya kopyalanır**.
+
+---
+
+## `iyzi check`
+
+Belirli bir tutar ve kredi kartı BIN numarası (ilk 6 hane) için taksit seçeneklerini sorgular.
+
+```bash
+npx iyzi check <price> --bin <binNumber>
+```
+
+**Argümanlar:**
+
+| Argüman | Açıklama |
+| :--- | :--- |
+| `<price>` | Taksit sorgulanacak tutar (örn. `100`). |
+| `--bin, -b` | Kredi kartının ilk 6 hanesi. |
+
+**Örnek:**
+
+```bash
+# 552608 ile başlayan bir kart için 1500 TRY tutarındaki taksitleri kontrol et
+npx iyzi check 1500 -b 552608
+```
+
+Mevcut taksit planları, toplam fiyatlar ve aylık maliyetleri içeren düzenli bir tablo görüntüler.
+
+---
+
+## `iyzi generate`
+
+Projeniz için UI bileşenleri oluşturur. Şu anda **Ödeme Formu** oluşturmayı desteklemektedir.
+
+```bash
+npx iyzi generate
+```
+
+CLI size şunları soracaktır:
+1. **Bileşen Tipi**: örn. Checkout Form.
+2. **Stil**:
+    - **Shadcn UI**: Genel `components/ui` yapısını kullanır (Zod + React Hook Form).
+    - **Tailwind CSS**: Tailwind sınıfları ile saf HTML/CSS (headless).
+
+<Callout type="warn">
+  Bu komut bir `components` dizininiz olduğunu varsayar. `components/iyzipay-ui/payment-form.tsx` dosyasını oluşturacaktır.
+</Callout>

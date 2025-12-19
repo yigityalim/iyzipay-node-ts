@@ -1,0 +1,47 @@
+---
+title: Hata Yönetimi
+description: API hatalarını zarif bir şekilde yönetme.
+---
+
+
+
+SDK, API hataları için istisna (exception) fırlatmak yerine başarı ve başarısızlık durumlarını yönetmek için `IyzipayResult<T>` sonuç modelini kullanır.
+
+## Sonuç Yapısı
+
+```typescript
+type IyzipayResult<T> = {
+  data: T | null;    // Başarı veya kısmi API hatasında doludur
+  error: any | null; // Ağ hatası veya doğrulama hatasında doludur
+}
+```
+
+## Yönetim Mantığı
+
+```typescript
+const result = await iyzipay.payment.create({ ... });
+
+// 1. Doğrulama/Ağ Hatalarını Kontrol Et (SDK Seviyesi)
+if (result.error) {
+  console.error('Doğrulama veya Ağ Hatası:', result.error);
+  return;
+}
+
+// 2. API Hatalarını Kontrol Et (Iyzico Seviyesi)
+if (result.data?.status === 'failure') {
+  console.error('API Hata Kodu:', result.data.errorCode);
+  console.error('API Hata Mesajı:', result.data.errorMessage);
+  return;
+}
+
+// 3. Başarı
+console.log('Başarı:', result.data);
+```
+
+### Yaygın Hata Kodları
+
+| Kod | Anlamı |
+| --- | --- |
+| `10051` | Yetersiz bakiye |
+| `10043` | Çalıntı kart |
+| `10012` | Geçersiz işlem |

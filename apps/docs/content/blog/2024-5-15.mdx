@@ -1,0 +1,156 @@
+---
+title: Introducing iyzipay-node-ts
+description: The modern, type-safe, and edge-ready Iyzico SDK for Node.js developers.
+author: Iyzipay TS Team
+date: 2024-03-20
+---
+
+import { Cpu, ShieldCheck, Zap, Terminal } from 'lucide-react';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
+# Introducing iyzipay-node-ts
+
+We are thrilled to announce the release of **iyzipay-node-ts**, a reimagined Iyzico client built for the modern JavaScript ecosystem.
+
+If you've ever struggled with the official library's lack of TypeScript support, callback hell, or inability to run on edge environments like Cloudflare Workers, this package is for you.
+
+## Why Re-invent the Wheel?
+
+The official `iyzipay` library was built in a different era of Node.js. Today, we need robust typing, `async/await`, and edge compatibility.
+
+<Cards>
+  <Card icon={<ShieldCheck />} title="Type Safety">
+    First-class TypeScript support with Zod schemas. Catch errors before you run code.
+  </Card>
+  <Card icon={<Zap />} title="Edge Ready">
+    Built on native `fetch` API. Runs on Cloudflare Workers, Vercel Edge, and Bun.
+  </Card>
+  <Card icon={<Terminal />} title="Developer Experience">
+    Comes with a powerful CLI tool to generate code and test payments instantly.
+  </Card>
+</Cards>
+
+## Killer Features
+
+### 1. Zero-Config Validation
+
+We use **Zod** under the hood. You don't need to guess which fields are required or what the card number format should be. We export these validators for you to use in your frontend too!
+
+```tsx tab="React Hook Form Example"
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { IyzipayValidators } from 'iyzipay-node-ts';
+
+const formSchema = z.object({
+  // Built-in TCKN & Luhn Algorithm checks
+  identityNumber: IyzipayValidators.tcKimlikNo, // [!code highlight]
+  cardNumber: IyzipayValidators.creditCard,     // [!code highlight]
+});
+
+```
+
+### 2. The CLI Tool
+
+We believe SDKs should help you code less. That's why we built a CLI that generates code for you.
+
+<CodeBlockTabs defaultValue="Scaffold">
+<CodeBlockTabsList>
+<CodeBlockTabsTrigger value="Scaffold">Scaffold</CodeBlockTabsTrigger>
+<CodeBlockTabsTrigger value="Test">Test</CodeBlockTabsTrigger>
+</CodeBlockTabsList>
+
+<CodeBlockTab value="Scaffold">
+Generate a full-featured checkout form component (Shadcn UI or Tailwind) in seconds.
+
+```bash
+npx iyzi generate
+```
+
+</CodeBlockTab>
+
+<CodeBlockTab value="Test">
+Test your API keys and create a real payment on Sandbox without writing a single line of code.
+
+```bash
+npx iyzi pay
+```
+
+</CodeBlockTab>
+</CodeBlockTabs>
+
+### 3. Modern Async API
+
+Say goodbye to callbacks. Everything is Promise-based and fully typed.
+
+```typescript title="payment.ts"
+import { iyzipay, Currency, PaymentGroup } from 'iyzipay-node-ts';
+
+const client = iyzipay({ ...config });
+
+// Clean, readable, and typed
+const { data, error } = await client.payment.create({
+  price: '120.00',
+  currency: Currency.TRY,
+  paymentGroup: PaymentGroup.PRODUCT,
+  // ...other parameters
+});
+
+if (error) {
+  console.error(error.errorMessage); // [!code error]
+  return;
+}
+
+console.log(data.paymentId); // [!code success]
+
+```
+
+## Getting Started
+
+Ready to upgrade your payment infrastructure? It takes less than 30 seconds.
+
+<Steps>
+<Step>
+### Install the package
+
+```npm
+npm install iyzipay-node-ts
+```
+
+</Step>
+
+<Step>
+### Initialize
+
+Create your client instance. We recommend using environment variables.
+
+```typescript
+import { createClient } from 'iyzipay-node-ts';
+
+export const client = createClient({
+  apiKey: process.env.IYZIPAY_API_KEY,
+  secretKey: process.env.IYZIPAY_SECRET_KEY,
+  baseUrl: 'https://sandbox-api.iyzipay.com'
+});
+```
+
+</Step>
+
+<Step>
+### Make your first request
+
+Check the [Quick Start](/docs/getting-started/quick-start) guide for a complete example.
+
+</Step>
+</Steps>
+
+## What's Next?
+
+We are actively working on **3D Secure** integration and **Webhook Tunneling** for the CLI.
+
+<Callout type="info" title="Join the Community">
+This is an open-source project. If you have feature requests or found a bug, please check our [GitHub Repository](https://github.com/your-repo).
+</Callout>
+
+Happy Coding! 🚀

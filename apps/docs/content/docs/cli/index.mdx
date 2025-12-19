@@ -1,0 +1,59 @@
+---
+title: Introduction
+description: The official command line tool for iyzipay-node-ts.
+---
+
+import { TerminalIcon, CreditCardIcon, ZapIcon, SettingsIcon } from 'lucide-react';
+
+The **Iyzipay CLI** is designed to improve your Developer Experience (DX) when working with Iyzico payments. It allows you to test connections, manage API keys, and scaffold components directly from your terminal.
+
+## Installation
+
+You don't need to install the CLI globally. You can run it directly using your package manager's execute command (like `npx` or `pnpx`).
+
+However, you can also add it to your project:
+
+```package-install
+npm install iyzipay-node-ts
+```
+
+## Quick Start
+
+Run the help command to see available options:
+
+```bash
+npx iyzi --help
+```
+
+## Features
+
+<Cards>
+  <Card
+    icon={<SettingsIcon />}
+    href="/docs/cli/commands#iyzi-init"
+    title="project setup"
+  >
+    Initialize your project and validate your API credentials securely.
+  </Card>
+  <Card
+    icon={<CreditCardIcon />}
+    href="/docs/cli/commands#iyzi-cards"
+    title="Test Cards"
+  >
+    Interactive wizard to access test card numbers for success and error scenarios.
+  </Card>
+  <Card
+    icon={<ZapIcon />}
+    href="/docs/cli/commands#iyzi-pay"
+    title="Instant Payment"
+  >
+    Perform a real Sandbox payment in seconds to verify your integration.
+  </Card>
+  <Card
+    icon={<TerminalIcon />}
+    href="/docs/cli/commands#iyzi-generate"
+    title="Code Generation"
+  >
+    Scaffold production-ready, type-safe payment forms for React/Next.js.
+  </Card>
+</Cards>

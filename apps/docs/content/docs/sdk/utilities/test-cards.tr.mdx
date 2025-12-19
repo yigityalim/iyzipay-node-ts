@@ -1,0 +1,50 @@
+---
+title: Test Kartları
+description: Sandbox test kartları.
+---
+
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+
+
+Sandbox testleri için önceden tanımlanmış kartlara doğrudan SDK üzerinden erişin.
+
+## Kullanım
+
+```typescript
+import { TestCards } from 'iyzipay-node-ts';
+
+// Ödeme isteklerinizde doğrudan kullanın
+const payment = await iyzipay.payment.create({
+  // ...
+  paymentCard: TestCards.Success.GarantiDebit
+});
+```
+
+## Mevcut Kartlar
+
+<Tabs items={['Başarılı', 'Hatalar', 'Yabancı']}>
+  <Tab value="Başarılı">
+    | Banka | Tip | Anahtar |
+    | --- | --- | --- |
+    | Akbank | Debit | `TestCards.Success.AkbankDebit` |
+    | Akbank | Kredi | `TestCards.Success.AkbankCredit` |
+    | Garanti | Debit | `TestCards.Success.GarantiDebit` |
+    | Garanti | Amex | `TestCards.Success.GarantiAmex` |
+    | İş Bankası | Kredi | `TestCards.Success.IsBankasiCredit` |
+  </Tab>
+  <Tab value="Hatalar">
+    | Hata | Açıklama | Anahtar |
+    | --- | --- | --- |
+    | **Yetersiz Bakiye** | 10051 | `TestCards.Errors.InsufficientFunds` |
+    | **Çalıntı Kart** | 10043 | `TestCards.Errors.StolenCard` |
+    | **Süresi Dolmuş** | 10054 | `TestCards.Errors.ExpiredCard` |
+    | **Şüpheli İşlem** | 10034 | `TestCards.Errors.FraudSuspect` |
+  </Tab>
+  <Tab value="Yabancı">
+    | Tip | Anahtar |
+    | --- | --- |
+    | Kredi | `TestCards.Foreign.Credit` |
+    | Debit | `TestCards.Foreign.Debit` |
+  </Tab>
+</Tabs>

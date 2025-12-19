@@ -1,0 +1,47 @@
+---
+title: Input Oluşturucu
+description: Karmaşık nesneler oluşturmak için yardımcı.
+---
+
+
+
+`Inputs` nesnesi, bürokratik alanları (Posta Kodları, Tarihler, Şehirler gibi) otomatik olarak oluşturmanıza yardımcı olur, böylece iş mantığına odaklanabilirsiniz.
+
+```typescript
+import { Inputs, ItemType } from 'iyzipay-node-ts';
+
+// 1. Alıcı (Buyer) Oluşturma
+const buyer = Inputs.buyer({
+  id: 'USER-123',
+  name: 'Ahmet',
+  surname: 'Yilmaz',
+  identityNumber: '11111111111',
+  email: 'ahmet@test.com',
+  // Opsiyonel:
+  // city: 'Ankara',
+  // ip: '1.1.1.1'
+});
+
+// 2. Adres Oluşturma
+const address = Inputs.address(
+  'Ataturk Mah. No:1',  // Tam Adres
+  'Ahmet Yilmaz'        // İletişim Kişisi
+);
+
+// 3. Sepet Öğesi Oluşturma
+const item = Inputs.basketItem(
+  'Kablosuz Mouse',       // İsim
+  '120.00',              // Fiyat
+  'Elektronik',          // Kategori
+  ItemType.PHYSICAL      // Tip
+);
+
+// 4. Kart Oluşturma (Kaydetmeden)
+const card = Inputs.card({
+  cardHolderName: 'Ahmet Yilmaz',
+  cardNumber: '...',
+  expireMonth: '12',
+  expireYear: '2030',
+  cvc: '123'
+});
+```

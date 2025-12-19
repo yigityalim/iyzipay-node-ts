@@ -1,0 +1,35 @@
+---
+title: Introduction
+description: Modern, Type-Safe Iyzipay Client for Node.js
+---
+
+**iyzipay-node-ts** is a modern, type-safe, and edge-compatible client for Iyzico's payment API.
+
+## Features
+
+- **🛡️ Type-Safe**: Built with TypeScript and Zod.
+- **🚀 Edge Compatible**: Works on Vercel Edge, Cloudflare Workers, and weak environments.
+- **🏗️ Functional & Class-based**: Supports both functional `createClient()` and class-based `new Iyzipay()`.
+- **🛠️ Utilities**: Built-in validators (TCKN, Luhn) and input builders.
+
+## Installation
+
+```package-install
+npm install iyzipay-node-ts
+```
+
+## Quick Start
+
+```typescript
+import { createClient } from 'iyzipay-node-ts';
+
+const client = createClient({
+  apiKey: process.env.IYZIPAY_API_KEY,
+  secretKey: process.env.IYZIPAY_SECRET_KEY,
+  baseUrl: 'https://sandbox-api.iyzipay.com'
+});
+
+const result = await client.payment.retrieve({
+  paymentId: '123456'
+});
+```

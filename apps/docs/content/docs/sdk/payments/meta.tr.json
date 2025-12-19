@@ -1,0 +1,4 @@
+{
+	"title": "Ödemeler",
+	"pages": ["create-payment", "refund-cancel"]
+}

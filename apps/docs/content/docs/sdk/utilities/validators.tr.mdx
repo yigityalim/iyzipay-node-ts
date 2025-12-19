@@ -1,0 +1,48 @@
+---
+title: Doğrulayıcılar
+description: TCKN ve Kartlar için Zod şemaları.
+---
+
+
+
+Formları sunucuda veya istemcide doğrulamanıza yardımcı olmak için Zod şemaları ve yardımcı fonksiyonlar dışa aktarılır.
+
+## Kullanım
+
+```typescript
+import { IyzipayValidators } from 'iyzipay-node-ts';
+
+// 1. TCKN Doğrulama
+try {
+  IyzipayValidators.tcKimlikNo.parse('11111111110');
+  console.log('Geçerli TCKN');
+} catch (e) {
+  console.error('Geçersiz TCKN');
+}
+
+// 2. Kredi Kartı (Luhn) Doğrulama
+try {
+  IyzipayValidators.creditCard.parse('4111111111111111');
+} catch (e) {
+  console.error('Geçersiz Kart Numarası');
+}
+
+// 3. GSM Numarası Doğrulama
+try {
+  IyzipayValidators.gsmNumber.parse('+905551234567');
+} catch (e) {
+  console.error('Geçersiz GSM');
+}
+```
+
+## Bağımsız Fonksiyonlar
+
+Zod kullanmak istemiyorsanız, doğrulama fonksiyonlarını doğrudan içe aktarabilirsiniz:
+
+```typescript
+import { isValidTCKN, isValidLuhn } from 'iyzipay-node-ts';
+
+if (isValidTCKN('11111111110')) {
+  // ...
+}
+```
